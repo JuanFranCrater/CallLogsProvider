@@ -19,11 +19,12 @@ public class CallBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
+
         //1-Recoger datos
         if(bundle!=null)
         {
             String state = bundle.getString(TelephonyManager.EXTRA_STATE);
-            if(state.equals(TelephonyManager.CALL_STATE_RINGING))
+            if(state.equals(TelephonyManager.EXTRA_STATE_RINGING))
             {
                 //1.1 Recoger el  número de teléfono
                 String number = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
@@ -36,8 +37,11 @@ public class CallBroadcast extends BroadcastReceiver {
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"Inventory");
                 builder.setContentTitle("CallBroadcast");
                 builder.setSmallIcon(android.R.drawable.sym_call_incoming);
-                builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(),android.R.drawable.sym_call_incoming));//Es necesario poner los dos iconos
+                builder.setLargeIcon(
+                        BitmapFactory.decodeResource(context.getResources(),
+                                android.R.drawable.sym_call_incoming));//Es necesario poner los dos iconos
                 builder.setContentIntent(pendingIntent);
+                builder.setAutoCancel(true);
                 NotificationManager nm= (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 nm.notify(CALLNOTIFICATION,builder.build());
             }
