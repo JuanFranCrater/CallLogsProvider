@@ -32,7 +32,7 @@ public class CallBroadcast extends BroadcastReceiver {
                 Intent newIntent = new Intent(context,CallInformation.class);
                 newIntent.putExtra("number",number);
                 newIntent.putExtra("idNotificacion",CALLNOTIFICATION);
-                PendingIntent pendingIntent =PendingIntent.getActivity(context,CALLNOTIFICATION,newIntent,0);
+                PendingIntent pendingIntent =PendingIntent.getActivity(context,CALLNOTIFICATION,newIntent,PendingIntent.FLAG_ONE_SHOT|PendingIntent.FLAG_UPDATE_CURRENT);
                 //3.Crear la notificación
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"Inventory");
                 builder.setContentTitle("CallBroadcast");
